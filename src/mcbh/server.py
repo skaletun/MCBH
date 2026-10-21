@@ -66,6 +66,23 @@ def resource_skill() -> str:
     return _data("SKILL.md")
 
 
+@mcp.resource("mcbh://visuals")
+def resource_visuals() -> str:
+    """Index of screenshot URLs with attribution and internal original SVG teaching plates."""
+    return _data("visual_index.json")
+
+
+@mcp.tool()
+def mcbh_visual_guides(topic: str = "all", max_results: int = 25) -> dict[str, Any]:
+    """Visual apprenticeship: Minecraft screenshots, accurate image source links, diagram URLs and lessons. Filter by construction, palettes, exterior, roofs, interior, terrain."""
+    db=json.loads(_data("visual_index.json"))
+    needle=topic.strip().lower()
+    matched=[a for a in db["items"] if needle=="all" or needle in (a["topic"]+" "+a["title"]+" "+a["id"]).lower()]
+    return {"total":len(matched),"items":matched[:max(1,min(40,max_results))],
+            "illustrated_walkthrough":"https://github.com/skaletun/MCBH/blob/main/docs/VISUAL_ATLAS.md",
+            "caution":"External images need browsing/vision in the MCP client. SVGs are original diagrams, not game screenshots. RCON cannot provide game screenshots."}
+
+
 @mcp.resource("mcbh://palettes")
 def resource_palettes() -> str:
     """Architectural block palette and application guidance."""

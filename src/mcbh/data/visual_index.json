@@ -1,0 +1,214 @@
+{
+  "version": 1,
+  "policy": "Original SVGs are technical teaching illustrations; external game screenshots are linked from their source and not bundled. Agent must have vision to inspect them.",
+  "items": [
+    {
+      "id": "palette-stone",
+      "topic": "palettes",
+      "type": "external-screenshot",
+      "title": "Real stone brick, carved and mossy material textures",
+      "author": "Onenazo",
+      "source_url": "https://onenazo.com/fr/blogs/learning-center/best-minecraft-building-blocks",
+      "image_url": "https://cdn.shopify.com/s/files/1/0935/8829/1859/files/Stone-Bricks.webp?v=1753416791",
+      "lesson": "Use moss where damp, rough stone at contact and smoother stone on sheltered walls.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "palette-gradient",
+      "topic": "palettes",
+      "type": "external-screenshot",
+      "title": "Visual stone wall gradient tutorial",
+      "author": "Minecraft Gradient",
+      "source_url": "https://minecraftgradient.blog/minecraft-wall-gradient/",
+      "image_url": "https://minecraftgradient.blog/static/images/blog/minecraft-wall-gradient.webp",
+      "lesson": "Use directional gradients and coherent clusters, not random single-block mixing.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "frame-under-construction",
+      "topic": "construction",
+      "type": "external-screenshot",
+      "title": "Minecraft frame with actual columns and beams",
+      "author": "Monster / MyFTB",
+      "source_url": "https://forum.myftb.de/t/mittelklasse-haus-einsteiger-anleitung-fuer-mittelalter-haeuser/17862",
+      "image_url": "https://forum.myftb.de/uploads/default/original/2X/9/99a065b16bd0a001267f905296bf0de214d4fb6a.jpg",
+      "lesson": "Frame precedes cladding. Structural bays align from base to eaves.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "small-house-frame",
+      "topic": "construction",
+      "type": "external-screenshot",
+      "title": "Vanilla house construction frame",
+      "author": "MineBox / utusemi0903",
+      "source_url": "https://minebox.hateblo.jp/entry/2018/04/07/183400",
+      "image_url": "https://cdn-ak.f.st-hatena.com/images/fotolife/u/utusemi0903/20180407/20180407182850.png",
+      "lesson": "Offsets and support positions must be planned before closing walls.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "roof-midbuild",
+      "topic": "roofs",
+      "type": "external-screenshot",
+      "title": "Actual Minecraft stairs-based roof building screenshot",
+      "author": "Alucare",
+      "source_url": "https://www.alucare.fr/es/comment-faire-un-toit-minecraft/",
+      "image_url": "https://www.alucare.fr/wp-content/uploads/2024/12/www.alucare.fr-comment-faire-un-toit-minecraft-tutoriel-Minecraft-toit-pair-4.jpg",
+      "lesson": "Stair orientation, ridge continuity and eave depth must be resolved.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "roof-depth",
+      "topic": "roofs",
+      "type": "external-screenshot",
+      "title": "Depth demonstration of cottage roof and walls",
+      "author": "GraySun8151",
+      "source_url": "https://x.com/GraySun8151",
+      "image_url": "https://pbs.twimg.com/media/G_6bB7oWYAEZ-Fp.jpg",
+      "lesson": "Layer roofs and wall features; do not treat a building as a flat cube.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "medieval-streetscape",
+      "topic": "exterior",
+      "type": "external-screenshot",
+      "title": "12th Century Northumbria medieval village",
+      "author": "billoxiiboy",
+      "source_url": "https://www.planetminecraft.com/project/medieval-project-ardacraft/",
+      "image_url": "https://static.planetminecraft.com/files/image/minecraft/project/2025/780/18989111_l.jpg",
+      "lesson": "Complex streetscape; special Conquest Reforged pack used by author, not vanilla.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "furnished-home",
+      "topic": "interior",
+      "type": "external-screenshot",
+      "title": "Medieval house with entire furnished interior project",
+      "author": "Frost01",
+      "source_url": "https://www.planetminecraft.com/project/extreme-detailed-medieval-house-full-interior/",
+      "image_url": "https://static.planetminecraft.com/files/image/minecraft/project/2025/401/19332583_l.jpg",
+      "lesson": "Interior must be functional; main screenshot alone cannot certify all rooms.",
+      "rights": "Photo hosted by its creator/source. Viewing link is not a redistribution license."
+    },
+    {
+      "id": "palette-medieval_timber",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "MEDIEVAL TIMBER",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-medieval_timber.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-medieval_timber.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-alpine_rustic",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "ALPINE RUSTIC",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-alpine_rustic.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-alpine_rustic.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-japanese_traditional",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "JAPANESE TRADITIONAL",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-japanese_traditional.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-japanese_traditional.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-modern_concrete",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "MODERN CONCRETE",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-modern_concrete.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-modern_concrete.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-desert_adobe",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "DESERT ADOBE",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-desert_adobe.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-desert_adobe.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-dark_fantasy",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "DARK FANTASY",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-dark_fantasy.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-dark_fantasy.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "palette-nature_terrain",
+      "topic": "palettes",
+      "type": "original-schematic",
+      "title": "NATURE & TERRAIN",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/palette-nature_terrain.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/palette-nature_terrain.svg",
+      "lesson": "Material role separation; approximate colors, not screenshot or true block textures."
+    },
+    {
+      "id": "guide-construction-sequence",
+      "topic": "construction",
+      "type": "original-schematic",
+      "title": "Eight-gate build sequence",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/guide-construction-sequence.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/guide-construction-sequence.svg",
+      "lesson": "Complete every stage."
+    },
+    {
+      "id": "guide-facade-depth",
+      "topic": "exterior",
+      "type": "original-schematic",
+      "title": "Facades that have real 3D depth",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/guide-facade-depth.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/guide-facade-depth.svg",
+      "lesson": "Model structural planes and cavities."
+    },
+    {
+      "id": "guide-roof-engineering",
+      "topic": "roofs",
+      "type": "original-schematic",
+      "title": "Roof pitch / dormer / overhang engineering",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/guide-roof-engineering.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/guide-roof-engineering.svg",
+      "lesson": "Use actual stairs block states."
+    },
+    {
+      "id": "guide-interior-plan",
+      "topic": "interior",
+      "type": "original-schematic",
+      "title": "Functional interior plan and circulation",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/guide-interior-plan.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/guide-interior-plan.svg",
+      "lesson": "Door and room functionality first."
+    },
+    {
+      "id": "guide-terrain-adaptation",
+      "topic": "terrain",
+      "type": "original-schematic",
+      "title": "Terraces, hillside and slopes",
+      "author": "MCBH contributors",
+      "image_url": "https://raw.githubusercontent.com/skaletun/MCBH/main/docs/plates/guide-terrain-adaptation.svg",
+      "source_url": "https://github.com/skaletun/MCBH/blob/main/docs/plates/guide-terrain-adaptation.svg",
+      "lesson": "Preserve original landforms."
+    }
+  ]
+}

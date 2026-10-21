@@ -17,6 +17,18 @@
 - No arbitrary shell/server-command tool, no remote script download, no direct unrestricted NBT or entity spawning by a blueprint.
 - An example multi-stage detailed cottage blueprint and a test suite.
 
+## Visual apprenticeship: actual Minecraft screenshots and build diagrams
+
+**[View the entire illustrated MCBH Visual Atlas](docs/VISUAL_ATLAS.md)**. It now includes real gameplay screenshots (hosted and credited to their original creators), seven architecture-specific visual block palettes and five original construction lessons. This is not just text URLs.
+
+![Eight professional build stages](docs/plates/guide-construction-sequence.svg)
+
+![Medieval block-role palette](docs/plates/palette-medieval_timber.svg)
+
+![Engineered roof and layers](docs/plates/guide-roof-engineering.svg)
+
+**Important:** SVG boards are original teaching diagrams, not in-game photos; the atlas embeds real screenshots separately. Image analysis requires an MCP host with vision/web support, and in-game visual audit requires screenshot access outside RCON. There is no claim that the plugin has literally observed images without that capability.
+
 ## Installation (Windows / PowerShell)
 
 Install Python **3.11+** and [uv](https://docs.astral.sh/uv/):
@@ -90,6 +102,7 @@ pytest -q
 | `mcbh_read_skill` | Reads full architectural skill or chapter. |
 | `mcbh_palettes` | Curated stylistic/material palette rules. |
 | `mcbh_references` | Source URLs: inspiration and technical docs. |
+| `mcbh_visual_guides` | Credit-bearing real screenshot URLs and included construction/palette illustrations. |
 | `mcbh_survey_terrain` | Non-block-edit heightmap samples from loaded chunks. |
 | `mcbh_check_block` | Tests specific candidate block IDs at coordinates. |
 | `mcbh_validate_blueprint` | Compile/check the plan without world changes. |
@@ -99,7 +112,7 @@ pytest -q
 | `mcbh_execute_phase` | Execute a single approved phase in batches. |
 | `mcbh_resume_reviewed` | Reopen a paused/uncertain job after inspection. |
 
-MCP prompt: `professional_builder_task`. MCP resources: `mcbh://skill`, `mcbh://palettes`, `mcbh://references`.
+MCP prompt: `professional_builder_task`. MCP resources: `mcbh://skill`, `mcbh://palettes`, `mcbh://references`, `mcbh://visuals`.
 
 ## Professional build workflow
 
