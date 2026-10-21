@@ -94,3 +94,35 @@ def test_material_override_injection_and_bad_roof_families():
         normalize({"material_overrides":{"teleport":"minecraft:stone"}})
     with pytest.raises(BuildError):
         normalize({"roof_overhang":100})
+
+
+def test_ground_floor_circulation_is_really_reachable():
+    from mcbh.architect import Mason, walkability
+    good = generate({"width":17,"depth":17,"seed":22,"floors":1})
+    assert good["quality"]["walkability"]["reachable"]
+    m=Mason([0,80,0])
+    for z in range(2,15):
+        for x in range(2,15):
+            m.add(x, 1, z, "minecraft:stone", "interior")
+    assert not walkability(m, 17, 17, 0, 8)["reachable"]
+
+
+def test_original_architecture_persists_and_exports(tmp_path, monkeypatch):
+    from mcbh.server import _publish_architecture
+    from mcbh import structures as st
+    from mcbh.viewer import export_viewer
+    monkeypatch.setenv("MCBH_DATA_DIR", str(tmp_path))
+    monkeypatch.setenv("MCBH_EXPORT_DIR", str(tmp_path/"exports"))
+    output = _publish_architecture(generate({"style":"medieval_timber","anchor":[200,88,300],"seed":41}))
+    assert output["staged"]
+    assert output["job_id"] and output["approval_token"]
+    obj = st.load_structure(output["structure_id"])
+    assert st.summary(obj)["blocks"] == output["quality"]["counts"]["voxels"]
+    assert len(st.materials(obj)) > 5
+    assert st.steps(obj, 0, 3)["total_steps"] > 3
+    viewer = export_viewer(obj, "generated-showcase.html")
+    assert (tmp_path/"exports"/"generated-showcase.html").exists()
+    assert viewer
+    local_min = obj["local_min"]
+    assert output["structure_export_anchor"] == [
+        200+local_min[0], 88+local_min[1], 300+local_min[2]]

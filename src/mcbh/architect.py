@@ -405,6 +405,48 @@ def _landscape(m: Mason, w: int, d: int, ybase: int, p: dict[str, Any],
                         m.add(tx+dx, gy+height+dy, tz+dz, p["leaf"], "landscape")
 
 
+def walkability(m: Mason, w: int, d: int, floor_y: int, door: int) -> dict[str, Any]:
+    """Flood-fill actual interior cells with 2-block headroom on one level.
+
+    This checks the plan's empty-air geometry, NOT Minecraft pathfinding or
+    dynamically opened doors, jumps, stairs, biome hazards or entity collision.
+    """
+    from collections import deque
+    occupied = m.blocks
+    def free(x: int, z: int) -> bool:
+        if not 2 <= x <= w-3 or not 2 <= z <= d-3:
+            return False
+        for y in (floor_y+1, floor_y+2):
+            block_info = occupied.get((x, y, z))
+            if block_info is None:
+                continue
+            state = block_info[0]
+            # Interior doors are deliberately allowed to open; furniture is not.
+            if "_door[" in state:
+                continue
+            return False
+        return True
+    entry = (door, 2)
+    if not free(*entry):
+        return {"reachable": False, "accessible_cells": 0,
+                "reason": "Interior entrance is blocked"}
+    todo = deque([entry])
+    visited = {entry}
+    while todo:
+        x, z = todo.popleft()
+        for candidate in ((x+1,z),(x-1,z),(x,z+1),(x,z-1)):
+            if candidate not in visited and free(*candidate):
+                visited.add(candidate)
+                todo.append(candidate)
+    # Reaching the rear room demonstrates that the central partition can be passed.
+    rear = any(z >= d-5 for _, z in visited)
+    left = any(x <= 4 for x, _ in visited)
+    right = any(x >= w-5 for x, _ in visited)
+    return {"reachable": rear and left and right,
+            "accessible_cells": len(visited), "reaches_rear": rear,
+            "reaches_west": left, "reaches_east": right}
+
+
 def quality_report(m: Mason, w: int, d: int, floors: int, ybase: int,
                    roof: dict[str, Any], terrain: list[list[int]], door: int) -> dict[str, Any]:
     """Mechanical gates, not a fake aesthetic quality score."""
@@ -414,7 +456,9 @@ def quality_report(m: Mason, w: int, d: int, floors: int, ybase: int,
     elevations = len(set(y for (_, y, _), (_, stage) in voxels.items() if stage == "roof"))
     furnishings = sum(1 for _, (b, stage) in voxels.items() if stage == "interior" and
                       any(k in b for k in ("bookshelf", "chest", "furnace", "bed", "barrel", "lectern", "stairs")))
+    circulation = walkability(m, w, d, ybase, door)
     checks = {
+        "ground_floor_circulation": circulation["reachable"],
         "doorway_two_blocks_clear": doorway,
         "solid_enough_roof": has_roof,
         "roof_volume_or_intentional_flat": bool(roof.get("roof_type")=="flat parapet" or elevations >= 3),
@@ -423,7 +467,7 @@ def quality_report(m: Mason, w: int, d: int, floors: int, ybase: int,
         "has_exterior_framing": any(stage == "facade" for _, stage in voxels.values()),
         "has_landscaping": any(stage == "landscape" for _, stage in voxels.values()),
     }
-    return {"passed": all(checks.values()), "checks": checks,
+    return {"passed": all(checks.values()), "checks": checks, "walkability": circulation,
             "counts": {"voxels": len(voxels), "unique_materials": len(set(v[0] for v in voxels.values())),
                        "furniture_blocks": furnishings, "roof_y_levels": elevations},
             "limitations": [
