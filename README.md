@@ -29,6 +29,40 @@
 
 **Important:** SVG boards are original teaching diagrams, not in-game photos; the atlas embeds real screenshots separately. Image analysis requires an MCP host with vision/web support, and in-game visual audit requires screenshot access outside RCON. There is no claim that the plugin has literally observed images without that capability.
 
+## Imported-structure guided builder (Brictora-inspired, independent)
+
+MCBH also converts existing `.schem` and `.litematic` files into **real block-level, survival-friendly construction instructions**. The user experience is based on study of Brictora's public step viewer, but MCBH's NBT parser, step engine, materials calculations and offline viewer are independently implemented. No Brictora code, assets, content or private API are used.
+
+**Workflow:** copy your own schematic into a safe local folder, let the agent parse it through MCP, inspect the exact material checklist, follow steps and layers, export an interactive offline viewer, and (if requested and approved) stage the same build as RCON commands or export vanilla `.mcfunction`.
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$HOME\.mcbh\imports"
+Copy-Item "C:\path\to\my-build.litematic" "$HOME\.mcbh\imports\my-build.litematic"
+```
+
+Ask your MCP agent: **“Use `mcbh_import_structure('my-build.litematic')`, generate a Survival step-by-step guide, give me the exact 64-stack material list, layer previews and interactive HTML, then stage the build at [100,70,100]. Show the result before requesting permission to modify the world.”**
+
+| MCP tool | Function |
+|---|---|
+| `mcbh_import_structure` | Sandboxed `.schem`/`.litematic` parsing, with full block states and safety limits |
+| `mcbh_structure_summary` | Dimensions, regions, exact non-air count, per-layer counts and caveats |
+| `mcbh_structure_materials` | Material counts and stacks of 64, Survival / Creative mode |
+| `mcbh_structure_steps` | Paginated adjacent-block groups with exact X/Y/Z coordinates |
+| `mcbh_structure_layer` | Exact top-down slices with cropped symbol-to-material legend |
+| `mcbh_structure_measure` | Coordinate measurement / dimensions |
+| `mcbh_guided_progress` | Persist manual progress per imported model on the local MCP server |
+| `mcbh_repalette_structure` | Safe material substitutions producing a new, unmodified variant |
+| `mcbh_export_viewer` | Single-file offline HTML with isometric rotation, layers, navigation, wireframe/grid/background, focus, material checklist and measurements |
+| `mcbh_stage_structure` | Convert to validated RCON phases, staged for human approval only |
+| `mcbh_export_mcfunction` | Offline vanilla datapack function export (absolute commands) |
+
+The MCP server handles **both** original professional creation from a natural-language brief and Brictora-like guides for an **existing** uploaded build. Those are different workflows and should not be confused.
+
+**Safety and compatibility:** exact files may include unsupported mod IDs or block entities. `mcbh_import_structure` does not automatically install mods or fetch textures. Tile entity NBT, inventories and entities are intentionally skipped. Block physics and multi-block requirements are not fully reconstructed; placement must be checked in-world. `clear_air=false` by default. Format parsers are bounded to 16 MiB compressed, 64 MiB decompressed, 500k total voxel positions and 250k non-air blocks per import. Output is stored in `$MCBH_DATA_DIR`; imports are read only from `$MCBH_IMPORT_DIR`, and exports stay under `$MCBH_EXPORT_DIR`.
+
+**REА status:** REA's documented CDP/browser analysis methods were studied, but the REA runtime itself was **not executed in this environment** (a compatible installed runtime and network package access were unavailable). The site behavior was inspected independently in a public browser; the implementation is an evidence-based functional interpretation rather than a claim to have recovered Brictora's proprietary source logic. See [Research & limitations](knowledge/GUIDED_BUILDER.md).
+
+
 ## Installation (Windows / PowerShell)
 
 Install Python **3.11+** and [uv](https://docs.astral.sh/uv/):

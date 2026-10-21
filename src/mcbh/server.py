@@ -12,6 +12,8 @@ import secrets
 from mcp.server import MCPServer
 from .core import Store, BuildError, block, dimension, pos, compile_blueprint, review, job_progress, next_commands
 from .rcon import Rcon, RconError
+from . import structures as st
+from .viewer import export_viewer
 
 mcp = MCPServer("MCBH - MinecraftBuildHumanized")
 
@@ -99,7 +101,7 @@ def resource_references() -> str:
 def professional_builder_task(user_request: str) -> str:
     """Full professional builder workflow for a user architecture request."""
     return ("You are a professional Minecraft builder, not a pre-made house generator. "
-            "First call mcbh_read_skill('all'), then mcbh_palettes and mcbh_references. "
+            "First call mcbh_read_skill('all'), and when importing a file also read mcbh://guided-builder; then mcbh_palettes and mcbh_references. "
             "Survey terrain when connected; ask for dimensions/placement only if truly necessary. "
             "Develop a unique silhouette, material hierarchy, terrain adaptation, varied roofline, "
             "3D facade depths, buildable floor plans, human-scale furnishing and landscape. "
@@ -280,6 +282,122 @@ def mcbh_check_block(x: int,y: int,z: int,candidates: list[str],dimension_id: st
         return {"match":None,"known":False,"tested":checked,"note":"Unknown means none of supplied candidates matched; not that the block is air."}
     except (BuildError,OSError,RconError) as exc:
         return {"error":str(exc)}
+
+
+@mcp.resource("mcbh://guided-builder")
+def resource_guided_builder() -> str:
+    """Original architecture of the guide engine based on observed public user workflows."""
+    return _data("GUIDED_BUILDER.md")
+
+
+@mcp.tool()
+def mcbh_import_structure(filename: str) -> dict[str,Any]:
+    """Safely parse a local .schem (Sponge v2/v3) or .litematic from MCBH_IMPORT_DIR; returns exact material bill, geometry and stable ID without touching the Minecraft world."""
+    try:
+        return st.import_file(filename)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc),"import_dir":str(st._root_dir('MCBH_IMPORT_DIR','imports'))}
+
+
+@mcp.tool()
+def mcbh_structure_materials(structure_id: str, mode: str="survival") -> dict[str,Any]:
+    """Exact material checklist and 64-item stack counts for all non-air blocks; never invents crafting recipes."""
+    try:
+        if mode not in ('survival','creative'):
+            raise BuildError('Mode must be survival or creative')
+        obj=st.load_structure(structure_id)
+        return {"structure_id":structure_id,"mode":mode,"materials":st.materials(obj,mode=='survival'),"total":len(obj['blocks'])}
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_structure_steps(structure_id: str, offset: int=0, count: int=20, mode: str="survival") -> dict[str,Any]:
+    """Actual coordinate-accurate construction steps grouped as connected same-block horizontal runs, with safe paginated navigation."""
+    try:
+        return st.steps(st.load_structure(structure_id),offset,count,mode)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_structure_layer(structure_id: str, y: int, x_from: int=0, z_from: int=0, width: int=32, depth: int=32) -> dict[str,Any]:
+    """A true top-down 2D slice of the imported structure, with symbol-to-block-state legend and up-to-64x64 crop."""
+    try:
+        return st.layer(st.load_structure(structure_id),y,x_from,z_from,width,depth)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_structure_summary(structure_id: str) -> dict[str,Any]:
+    """Geometry, block counts, region counts, per-height histogram and format caveats."""
+    try:
+        return st.summary(st.load_structure(structure_id))
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_stage_structure(structure_id: str, at: list[int], dimension_id: str="minecraft:overworld", clear_air: bool=False) -> dict[str,Any]:
+    """Convert an imported structure into real validated RCON building phases and stage it for human approval. No world changes until approved execution. clear_air is destructive and defaults off."""
+    try:
+        bp=st.blueprint(st.load_structure(structure_id),at,dimension_id,clear_air)
+        staged=_store().stage(bp)
+        return {"staged":True,"job_id":staged['id'],"approval_token":staged['approval_token'],"audit":review(staged),
+                "warning":"Preview and obtain explicit human approval before calling mcbh_execute_phase. clear_air may destroy existing landscape/builds."}
+    except (BuildError,OSError,ValueError) as exc:
+        return {"staged":False,"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_guided_progress(structure_id: str, completed_steps: int|None=None, mode: str="survival") -> dict[str,Any]:
+    """Read/update persisted manual step progress; survives restarts on the same MCBH host. Zero resets, and values never exceed the actual step count."""
+    try:
+        return st.guide_progress(structure_id,completed_steps,mode)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_repalette_structure(structure_id: str, replacements: dict[str,str]) -> dict[str,Any]:
+    """Create a NEW local variant using validated block-state-to-block-state substitutions (paint-bucket equivalent); original stays intact."""
+    try:
+        return st.repalette(structure_id,replacements)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_structure_measure(a: list[int], b: list[int]) -> dict[str,Any]:
+    """Precisely measure axis offsets, Manhattan distance, Euclidean span and inclusive voxel extents between two local model points."""
+    try:
+        start,end=pos(a),pos(b)
+        import math
+        delta=[abs(end[i]-start[i]) for i in range(3)]
+        return {"delta_xyz":delta,"inclusive_extent":[v+1 for v in delta],
+                "manhattan":sum(delta),"euclidean":round(math.dist(start,end),4)}
+    except (BuildError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_export_viewer(structure_id: str, filename: str="mcbh-guide.html") -> dict[str,Any]:
+    """Export a single-file offline interactive guide with 3D-like isometric orbit, layers, steps, checklist, grid, progress and measurements."""
+    try:
+        return export_viewer(st.load_structure(structure_id), filename)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_export_mcfunction(structure_id: str, at: list[int], dimension_id: str="minecraft:overworld", clear_air: bool=False, filename: str="mcbh-import.mcfunction") -> dict[str,Any]:
+    """Write an exact Java Edition function file inside MCBH_EXPORT_DIR. This does not change the world; users install it into their datapack."""
+    try:
+        return st.export_mcfunction(st.load_structure(structure_id),at,dimension_id,clear_air,filename)
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
+
 
 
 def main() -> None:
