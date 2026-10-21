@@ -73,3 +73,24 @@ def test_building_type_and_reproducible_stages():
     assert not b["quality"]["wing"]
     assert a["structure"]["blocks"] != b["structure"]["blocks"]
     assert "roof" in [p["name"] for p in a["blueprint"]["phases"]]
+
+
+def test_roof_pitch_and_original_material_role_overrides():
+    default = generate({"width": 27, "roof_pitch": "balanced", "seed": 27})
+    shallow = generate({"width": 27, "roof_pitch": "low", "seed": 27,
+                        "roof_overhang": 3,
+                        "material_overrides": {"wall": "minecraft:birch_planks"}})
+    assert shallow["quality"]["roof"]["ridge_y"] < default["quality"]["roof"]["ridge_y"]
+    assert shallow["quality"]["roof"]["eaves"] == 3
+    assert any(block == "minecraft:birch_planks" for *_,block in shallow["structure"]["blocks"])
+
+
+def test_material_override_injection_and_bad_roof_families():
+    with pytest.raises(BuildError):
+        normalize({"material_overrides":{"wall":"minecraft:stone run say hacked"}})
+    with pytest.raises(BuildError):
+        normalize({"material_overrides":{"roof":"minecraft:dirt"}})
+    with pytest.raises(BuildError):
+        normalize({"material_overrides":{"teleport":"minecraft:stone"}})
+    with pytest.raises(BuildError):
+        normalize({"roof_overhang":100})

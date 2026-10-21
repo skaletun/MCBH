@@ -46,7 +46,7 @@ STYLES = {
         "floor": "minecraft:smooth_quartz", "roof": "minecraft:smooth_stone",
         "stone": "minecraft:polished_andesite", "aged": "minecraft:stone_bricks",
         "window": "minecraft:glass", "accent": "minecraft:dark_oak_planks",
-        "door": "minecraft:iron_door", "fence": "minecraft:iron_bars",
+        "door": "minecraft:dark_oak_door", "fence": "minecraft:iron_bars",
         "leaf": "minecraft:oak_leaves[persistent=true]", "flat": True,
     },
     "desert_adobe": {
@@ -110,12 +110,36 @@ def normalize(brief: dict[str, Any]) -> dict[str, Any]:
                             _int(sy, -64, 330, "surface Y")])
     else:
         terrain = []
+    roof_pitch = brief.get("roof_pitch", "balanced")
+    if roof_pitch not in ("low", "balanced", "steep"):
+        raise BuildError("roof_pitch must be low, balanced or steep")
+    roof_overhang = _int(brief.get("roof_overhang", 2), 1, 3, "roof_overhang")
+    custom = brief.get("material_overrides", {})
+    if not isinstance(custom, dict):
+        raise BuildError("material_overrides must be an object")
+    allowed_roles = set(STYLES[style])-{"flat"}
+    if not set(custom).issubset(allowed_roles):
+        raise BuildError(f"Only these palette roles may be overridden: {sorted(allowed_roles)}")
+    custom = {key: block(value) for key, value in custom.items()}
+    if "roof" in custom and not STYLES[style]["flat"]:
+        if custom["roof"] not in {
+            "minecraft:dark_oak", "minecraft:spruce", "minecraft:oak",
+            "minecraft:deepslate_tile", "minecraft:stone_brick", "minecraft:acacia",
+            "minecraft:brick", "minecraft:polished_blackstone_brick",
+        }:
+            raise BuildError("Pitched roof override must be a real Java stair/slab block family")
+    if "door" in custom and not custom["door"].endswith("_door"):
+        raise BuildError("Door override must name a valid door family")
+    if "leaf" in custom and "leaves" not in custom["leaf"]:
+        raise BuildError("Leaf material must be a leaves block")
     wing = brief.get("wing", "auto")
     if wing not in (True, False, "auto"):
         raise BuildError("wing must be true, false or auto")
     return {"title": title, "style": style, "building_type": building_type,
             "width": width, "depth": depth, "floors": floors, "seed": seed,
-            "anchor": list(anchor), "terrain": terrain, "wing": wing}
+            "anchor": list(anchor), "terrain": terrain, "wing": wing,
+            "roof_pitch": roof_pitch, "roof_overhang": roof_overhang,
+            "material_overrides": custom}
 
 
 def _height(samples: list[list[int]], x: int, z: int, baseline: int) -> int:
@@ -214,14 +238,18 @@ def _rect_outline(xa: int, za: int, xb: int, zb: int):
 
 def _roof(m: Mason, x0: int, z0: int, x1: int, z1: int, base: int,
           p: dict[str, str | bool], style: str, rng: random.Random,
-          ridge_direction: str = "z") -> dict[str, int | str]:
+          ridge_direction: str = "z", pitch: str = "balanced",
+          requested_overhang: int = 2) -> dict[str, int | str]:
     if bool(p["flat"]):
         m.prism(x0-1, base, z0-1, x1+1, base, z1+1, str(p["roof"]), "roof")
         for x, z in _rect_outline(x0-1, z0-1, x1+1, z1+1):
             m.add(x, base+1, z, str(p["accent"]), "roof")
         return {"roof_type": "flat parapet", "eaves": 1, "ridge_y": base}
-    # Real gabled, stepped roof profile with one to two block overhang.
-    overhang = 2 if style in ("alpine_rustic", "japanese_traditional") else 1
+    # Roof rise depends on actual span; giant 45-degree prisms overwhelm wide buildings.
+    overhang = requested_overhang
+    ratio = {"low": 0.5, "balanced": 0.75, "steep": 1.0}[pitch]
+    if style == "japanese_traditional":
+        ratio *= 0.8
     a, b = (x0, x1) if ridge_direction == "z" else (z0, z1)
     mid = (a+b)//2
     radius = (b-a)//2 + overhang
@@ -230,7 +258,7 @@ def _roof(m: Mason, x0: int, z0: int, x1: int, z1: int, base: int,
         dist = abs(along-mid)
         # An asymmetric ridge is resolved naturally on even spans.
         h = max(0, radius-dist)
-        height = h if style != "japanese_traditional" else (h+1)//2 + h//3
+        height = math.ceil(h * ratio)
         rise = max(rise, height)
         side = "west" if along < mid else "east"
         if ridge_direction != "z":
@@ -246,9 +274,7 @@ def _roof(m: Mason, x0: int, z0: int, x1: int, z1: int, base: int,
     # Gable triangles behind the eaves, built with actual solid blocks.
     for along in range(a, b+1):
         dist = abs(along-mid)
-        h = radius-dist
-        if style == "japanese_traditional":
-            h = (h+1)//2 + h//3
+        h = math.ceil((radius-dist) * ratio)
         for transverse in (z0, z1) if ridge_direction == "z" else (x0, x1):
             for offset in range(max(0, h)):
                 xx, zz = (along, transverse) if ridge_direction == "z" else (transverse, along)
@@ -329,8 +355,8 @@ def _furnish(m: Mason, w: int, d: int, base: int, level: int,
     m.add(w//2+1, base+1, zsplit-4, "minecraft:spruce_stairs[facing=west,half=bottom]", "interior")
     if function in ("tavern", "house"):
         m.add(4, base+1, d-4, "minecraft:chest[facing=south,type=single]", "interior")
-        m.add(5, base+1, d-4, "minecraft:red_bed[facing=west,part=foot]", "interior")
-        m.add(6, base+1, d-4, "minecraft:red_bed[facing=west,part=head]", "interior")
+        m.add(5, base+1, d-4, "minecraft:red_bed[facing=east,part=foot]", "interior")
+        m.add(6, base+1, d-4, "minecraft:red_bed[facing=east,part=head]", "interior")
     elif function == "workshop":
         m.add(4, base+1, d-4, "minecraft:crafting_table", "interior")
         m.add(5, base+1, d-4, "minecraft:furnace[facing=north,lit=false]", "interior")
@@ -343,9 +369,9 @@ def _furnish(m: Mason, w: int, d: int, base: int, level: int,
     else:
         m.add(4, base+1, d-4, "minecraft:barrel", "interior")
         m.add(5, base+1, d-4, "minecraft:cartography_table", "interior")
-    # Light is anchored and intentionally sparse. Hanging lantern from high beams.
-    for x in (w//2-3, w//2+3):
-        m.add(x, base+4, zsplit-3, "minecraft:lantern[hanging=true]", "lighting")
+    # Tabletop/shelf lanterns have real support below; never suspend lanterns in empty space.
+    m.add(w//2-1, base+2, zsplit-4, "minecraft:lantern[hanging=false]", "lighting")
+    m.add(3, base+2, zsplit-1, "minecraft:lantern[hanging=false]", "lighting")
 
 
 def _landscape(m: Mason, w: int, d: int, ybase: int, p: dict[str, Any],
@@ -411,7 +437,7 @@ def quality_report(m: Mason, w: int, d: int, floors: int, ybase: int,
 def generate(brief: dict[str, Any]) -> dict[str, Any]:
     """Original architecture with deterministic but non-identical facade, roof and floorplan."""
     params = normalize(brief)
-    p = STYLES[params["style"]]
+    p = {**STYLES[params["style"]], **params["material_overrides"]}
     w, d, floors = params["width"], params["depth"], params["floors"]
     seed, base = params["seed"], 0
     rng = random.Random(seed)
@@ -457,14 +483,16 @@ def generate(brief: dict[str, Any]) -> dict[str, Any]:
         for x in (w//2-3, w//2+3):
             for y in range(0, height):
                 m.add(x, y, -2, p["beam"], "facade")
-    main_roof = _roof(m, 0, 0, w-1, d-1, floors*height, p, params["style"], rng)
+    main_roof = _roof(m, 0, 0, w-1, d-1, floors*height, p, params["style"], rng,
+                      pitch=params["roof_pitch"], requested_overhang=params["roof_overhang"])
     if wing:
         # A separate attached volume with its own narrower roof ridge, not a prefab sticker.
         za = max(3, d//3)
         zb = min(d-3, za+8)
         wx0, wx1 = w-2, w+6
         _story(m, wx0, za, wx1, zb, 0, p, None, 0, bool(p["flat"]), opening_side=False)
-        _roof(m, wx0, za, wx1, zb, height, p, params["style"], rng, ridge_direction="x")
+        _roof(m, wx0, za, wx1, zb, height, p, params["style"], rng,
+              ridge_direction="x", pitch=params["roof_pitch"], requested_overhang=params["roof_overhang"])
         # Passage through the actual shared wall, with two-block head clearance.
         through_z = za+(zb-za)//2
         for xx in (w-2, w-1):
@@ -505,7 +533,8 @@ def generate(brief: dict[str, Any]) -> dict[str, Any]:
 def revision(original: dict[str, Any], overrides: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(overrides, dict):
         raise BuildError("Design changes must be a JSON object")
-    permitted = {"style", "building_type", "width", "depth", "floors", "seed", "wing", "terrain", "anchor", "title"}
+    permitted = {"style", "building_type", "width", "depth", "floors", "seed", "wing", "terrain", "anchor", "title",
+                 "roof_pitch", "roof_overhang", "material_overrides"}
     if any(k not in permitted for k in overrides):
         raise BuildError(f"Allowed design changes: {sorted(permitted)}")
     new = dict(original)

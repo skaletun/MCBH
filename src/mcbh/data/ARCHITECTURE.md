@@ -44,3 +44,16 @@ Do not claim “professional” without human/vision verification of every crite
 ### Explicit limitations
 
 MCBH uses Java commands over RCON and does **not** capture game screenshots, read full blocks or detect all world collisions. The built-in procedural architect covers small-to-medium buildings and needs human/agent visual refinement. MCBH does not embed a trained Minecraft generative AI model or proprietary Brictora code. It cannot guarantee a human-level outcome without visual review and iteration.
+
+## Parametric architecture controls and supported export origin
+
+The design brief additionally supports `roof_pitch` (`low`, `balanced`, `steep`), `roof_overhang` (1–3 blocks), and `material_overrides` (validated block IDs for explicit wall/beam/roof/floor/foundation/glazing/trim/door/fence/leaves roles). Complex roof topology remains a limitation: use custom blueprints for valleys, vaults, mansards and historical multi-ridge roofs. Don't misrepresent a parametric gable as an accomplished custom roof.
+
+Use returned **`structure_export_anchor`**, not the design entrance/world anchor, when calling `mcbh_export_mcfunction` for original designs: generated structures are normalized to their minimum local XYZ coordinate and include paths and landscaping beyond the house footprint. Their staged RCON job already uses correct absolute coordinates.
+
+### Grounded learning references
+
+- [Mojang: Grian and Pearlescent Moon on planning, 3D mass skeletons, custom terrain and exteriors](https://www.minecraft.net/tr-tr/article/how-do-mega-builds)
+- [Minecraft Wiki: roof scale, pitch, gables, joint continuity and slope adaptation](https://minecraft.wiki/w/Tutorial:Roof_construction_guidelines)
+- [Minecraft.net: structural massing and shaping a build](https://www.minecraft.net/nb-no/article/how-structure-your-build)
+- [Illustrated MCBH Visual Atlas, real screenshots with source attribution](https://github.com/skaletun/MCBH/blob/main/docs/VISUAL_ATLAS.md)
