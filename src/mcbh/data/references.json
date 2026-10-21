@@ -1,0 +1,20 @@
+[
+  {"topic":"official","title":"Minecraft official Java release notes","url":"https://www.minecraft.net/en-us/article","value":"Track version changes and newly available blocks/command semantics."},
+  {"topic":"commands","title":"Minecraft Wiki: execute and positioned over heightmaps","url":"https://minecraft.wiki/w/Commands/execute","value":"Read terrain top surface from heightmap, Java 1.21+."},
+  {"topic":"commands","title":"Minecraft Wiki: fill","url":"https://minecraft.wiki/w/Commands/fill","value":"Fill syntax, block limit and filters."},
+  {"topic":"commands","title":"Minecraft Wiki: setblock","url":"https://minecraft.wiki/w/Commands/setblock","value":"Placing exact blocks and states."},
+  {"topic":"commands","title":"Minecraft 1.21.5 official changes","url":"https://feedback.minecraft.net/hc/en-us/articles/35298208390797-Minecraft-Java-Edition-1-21-5-Spring-to-Life","value":"Changes to /fill, /setblock and strict behavior."},
+  {"topic":"commands","title":"Minecraft Java 1.21.11 official release notes","url":"https://www.minecraft.net/it-it/article/minecraft-java-edition-1-21-11","value":"Changes to command modification gamerules."},
+  {"topic":"rcon","title":"Minecraft Wiki RCON","url":"https://fr.minecraft.wiki/w/RCON","value":"Transport, server configuration and security warnings."},
+  {"topic":"minecraft-art","title":"Planet Minecraft: mountain forest village transformation","url":"https://www.planetminecraft.com/project/mountain-forest-village-transformation/","value":"Visual study: terraced hillside, retaining walls, slope-matched access and roof complexity."},
+  {"topic":"minecraft-art","title":"Planet Minecraft: medieval Northumbria / Ardacraft","url":"https://www.planetminecraft.com/project/medieval-project-ardacraft/","value":"Visual study: timber framing, offset bays, grounded stone and natural landscaping."},
+  {"topic":"minecraft-art","title":"Planet Minecraft: MayCape rustic village","url":"https://www.planetminecraft.com/project/maycape-rusticmedieval-town/","value":"Visual study: urban density, interconnected paths, vegetation masses and custom terrain."},
+  {"topic":"minecraft-art","title":"Planet Minecraft: medieval village houses/castle/church","url":"https://www.planetminecraft.com/project/the-minecraft-build-of-a-medieval-village-with-houses-castle-and-church/","value":"Study spatial hierarchy in settlement planning."},
+  {"topic":"interior","title":"Planet Minecraft: extreme detailed medieval house full interior","url":"https://www.planetminecraft.com/project/extreme-detailed-medieval-house-full-interior/","value":"Visual study: entire inside/outside project and practical room furnishing."},
+  {"topic":"interior","title":"Planet Minecraft: Raekon furnished medieval house","url":"https://www.planetminecraft.com/project/medieval-house-fully-decorated-interior-download/","value":"Study detailed interior zoning and exterior continuity."},
+  {"topic":"interior","title":"Planet Minecraft: Andyways medieval interior home","url":"https://www.planetminecraft.com/project/medieval-house-with-interior-free-download/","value":"Survival-sized functional interior and layout reference."},
+  {"topic":"building-tutorial","title":"Planet Minecraft: Depth and layering concepts","url":"https://www.planetminecraft.com/blog/the-ultimate-trick-to-build-better-in-minecraft-that-most-players-ignore/","value":"Basic guidance on multi-plane facades, overhangs and shadow lines."},
+  {"topic":"worldedit","title":"WorldEdit official Quick Start","url":"https://worldedit.enginehub.org/en/latest/quickstart/","value":"Optional companion editor; NOT a universal dependency for MCBH."},
+  {"topic":"worldedit","title":"WorldEdit official schematic and clipboard commands","url":"https://worldedit.enginehub.org/en/latest/commands/","value":"Optional supported workflow for exporting/importing schematics."},
+  {"topic":"mcp","title":"Official Python MCP SDK v2 documentation","url":"https://py.sdk.modelcontextprotocol.io/","value":"MCPServer API and protocol transports."}
+]

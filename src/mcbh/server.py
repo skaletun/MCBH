@@ -1,0 +1,273 @@
+"""MCP v2 stdio server; universal Java 1.21+ RCON transport."""
+from __future__ import annotations
+
+from importlib.resources import files
+from pathlib import Path
+from typing import Any
+import json
+import os
+import re
+import secrets
+
+from mcp.server import MCPServer
+from .core import Store, BuildError, block, dimension, pos, compile_blueprint, review, job_progress, next_commands
+from .rcon import Rcon, RconError
+
+mcp = MCPServer("MCBH - MinecraftBuildHumanized")
+
+
+def _store() -> Store:
+    return Store(Path(os.getenv("MCBH_DATA_DIR",str(Path.home()/".mcbh"/"jobs"))))
+
+
+def _rcon() -> Rcon:
+    return Rcon(os.getenv("MCBH_RCON_HOST","127.0.0.1"),int(os.getenv("MCBH_RCON_PORT","25575")),os.getenv("MCBH_RCON_PASSWORD",""),float(os.getenv("MCBH_RCON_TIMEOUT","8")))
+
+
+def _data(file: str) -> str:
+    return (files("mcbh")/"data"/file).read_text(encoding="utf-8")
+
+
+def _safe_response(response: str) -> str:
+    return response[:1200]
+
+
+def _looks_like_error(response: str) -> bool:
+    # Minecraft can be localized; do not mistake empty/ambiguous output for confirmed success.
+    return bool(re.search(r"unknown or incomplete command|unknown command|incorrect argument|too many blocks|outside of the world|not loaded|failed to execute|syntax error|invalid .*block|could not|cannot place",response,re.I))
+
+
+@mcp.tool()
+def mcbh_connection() -> dict[str,Any]:
+    """Check the RCON connection; reports server response, never exposes password."""
+    try:
+        with _rcon() as session:
+            result=session.command("list")
+        return {"connected":True,"response":_safe_response(result),"transport":"RCON","loader":"Any Java dedicated server with RCON"}
+    except (OSError,ValueError,RconError) as exc:
+        return {"connected":False,"error":str(exc),"hint":"Enable RCON in server.properties and set MCBH_RCON_PASSWORD"}
+
+
+@mcp.tool()
+def mcbh_read_skill(section: str = "all") -> str:
+    """Read human-professional builder methodology: terrain, massing, roofs, facades, palettes, interior and QA. Read this BEFORE planning."""
+    content=_data("SKILL.md")
+    if section=="all":
+        return content
+    marker=f"## {section}"
+    if marker not in content:
+        return "Unknown section. Use all or exact section title from SKILL.md."
+    return marker+content.split(marker,1)[1].split("\n## ",1)[0]
+
+
+@mcp.resource("mcbh://skill")
+def resource_skill() -> str:
+    """Complete integrated builder skill instructions."""
+    return _data("SKILL.md")
+
+
+@mcp.resource("mcbh://palettes")
+def resource_palettes() -> str:
+    """Architectural block palette and application guidance."""
+    return _data("palettes.json")
+
+
+@mcp.resource("mcbh://references")
+def resource_references() -> str:
+    """Verified links to building inspiration, articles and Minecraft command references."""
+    return _data("references.json")
+
+
+@mcp.prompt()
+def professional_builder_task(user_request: str) -> str:
+    """Full professional builder workflow for a user architecture request."""
+    return ("You are a professional Minecraft builder, not a pre-made house generator. "
+            "First call mcbh_read_skill('all'), then mcbh_palettes and mcbh_references. "
+            "Survey terrain when connected; ask for dimensions/placement only if truly necessary. "
+            "Develop a unique silhouette, material hierarchy, terrain adaptation, varied roofline, "
+            "3D facade depths, buildable floor plans, human-scale furnishing and landscape. "
+            "Stage actual block-coordinate geometry as a phased blueprint, inspect preview warnings, "
+            "and obtain explicit approval before execution. Inspect after each phase. "
+            "Do not claim visual inspection without a real screenshot or user feedback. "
+            f"User request: {user_request}")
+
+
+@mcp.tool()
+def mcbh_palettes(style: str = "all") -> dict[str,Any]:
+    """Curated block palettes grouped by architecture and terrain, with weight/contrast design logic."""
+    data=json.loads(_data("palettes.json"))
+    if style=="all":
+        return data
+    return {"style":style,"palette":data["palettes"].get(style),"available":sorted(data["palettes"])}
+
+
+@mcp.tool()
+def mcbh_references(topic: str = "all") -> list[dict[str,str]]:
+    """Source URLs for real builders, visual references and technical command documentation; no copyrighted image copying."""
+    data=json.loads(_data("references.json"))
+    return [r for r in data if topic=="all" or topic.lower() in (r["topic"].lower()+" "+r["title"].lower())]
+
+
+@mcp.tool()
+def mcbh_validate_blueprint(blueprint: dict[str,Any]) -> dict[str,Any]:
+    """Compile and audit a proposed JSON blueprint WITHOUT touching Minecraft; see skill schema."""
+    try:
+        job=compile_blueprint(blueprint)
+        return {"valid":True,**review(job),"note":"Validation checks command safety, not actual world collisions or visual quality."}
+    except (BuildError,TypeError) as exc:
+        return {"valid":False,"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_stage_blueprint(blueprint: dict[str,Any]) -> dict[str,Any]:
+    """Persist a complete phased blueprint (does NOT execute). Returns job ID + one-time approval token."""
+    try:
+        job=_store().stage(blueprint)
+        return {"staged":True,"job_id":job["id"],"approval_token":job["approval_token"],"audit":review(job),"instruction":"Show the design, terrain impact and block counts to user. Require explicit approval before mcbh_execute_phase."}
+    except (BuildError,TypeError,OSError) as exc:
+        return {"staged":False,"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_preview(job_id: str, phase: str = "all", first_commands: int = 10) -> dict[str,Any]:
+    """Show material estimate, phase progress and representative exact world commands without executing."""
+    try:
+        job=_store().load(job_id)
+        n=max(0,min(30,first_commands))
+        chosen=[p for p in job["phases"] if phase=="all" or p["name"]==phase]
+        if not chosen:
+            raise BuildError("Phase not found")
+        return {**job_progress(job),"audit":review(job),"sample_commands":{p["name"]:p["commands"][:n] for p in chosen},"limitations":"No world collision detection; screenshot review requires external visual access."}
+    except (BuildError,OSError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_jobs() -> list[dict[str,Any]]:
+    """List local persisted staged/partial/complete jobs."""
+    return _store().list()
+
+
+@mcp.tool()
+def mcbh_execute_phase(job_id: str, phase: str, approval_token: str, batch_size: int = 32) -> dict[str,Any]:
+    """Explicitly approved, resumable execution of ONE build phase, max 128 commands per call. Use repeated calls until complete."""
+    store=_store()
+    try:
+        job=store.load(job_id)
+        if not secrets.compare_digest(approval_token,job["approval_token"]):
+            raise BuildError("Approval token mismatch")
+        if job["status"] in ("uncertain","paused"):
+            raise BuildError("Job paused. Inspect server and call mcbh_resume_reviewed before retry")
+        n=max(1,min(128,batch_size))
+        commands=next_commands(job,phase,n)
+        if not commands:
+            return {**job_progress(job),"batch_executed":0}
+        target=next(p for p in job["phases"] if p["name"]==phase)
+        response=""
+        with _rcon() as session:
+            for cmd in commands:
+                full=f"execute in {job['dimension']} run {cmd}"
+                # Ambiguous network failures are never silently retried.
+                try:
+                    response=session.command(full)
+                except (OSError,RconError) as exc:
+                    job["status"]="uncertain"
+                    job["last_error"]=f"RCON result uncertain for {full}: {exc}"
+                    store.save(job)
+                    return {**job_progress(job),"error":job["last_error"],"action":"Inspect world before resuming; command may have run"}
+                if _looks_like_error(response):
+                    job["status"]="paused"
+                    job["last_error"]=f"{full}: {_safe_response(response)}"
+                    store.save(job)
+                    return {**job_progress(job),"error":job["last_error"],"action":"Review failed command and world state"}
+                target["cursor"]+=1
+                job["status"]="building"
+                store.save(job)
+        if target["cursor"]==len(target["commands"]):
+            target["complete"]=True
+        if all(p["complete"] for p in job["phases"]):
+            job["status"]="complete"
+        store.save(job)
+        return {**job_progress(job),"batch_executed":len(commands),"last_server_response":_safe_response(response),"note":"RCON response does not prove visual/build correctness; inspect in game."}
+    except (BuildError,OSError,RconError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_resume_reviewed(job_id: str, approval_token: str, confirm_world_checked: bool) -> dict[str,Any]:
+    """Unpause after a human has inspected an uncertain/failed command; may repeat one command."""
+    try:
+        store=_store()
+        job=store.load(job_id)
+        if not secrets.compare_digest(approval_token,job["approval_token"]) or not confirm_world_checked:
+            raise BuildError("Approval and inspected-world confirmation required")
+        if job["status"] not in ("paused","uncertain"):
+            raise BuildError("Job is not paused")
+        job["status"]="building"
+        job.pop("last_error",None)
+        store.save(job)
+        return job_progress(job)
+    except (BuildError,OSError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_survey_terrain(points: list[list[int]], dimension_id: str = "minecraft:overworld", heightmap: str = "motion_blocking_no_leaves") -> dict[str,Any]:
+    """Non-block-editing heightmap survey (1..36 x/z samples) using short-lived marker entities. Chunks must be loaded."""
+    if heightmap not in {"world_surface","motion_blocking","motion_blocking_no_leaves","ocean_floor"}:
+        return {"error":"Unsupported heightmap"}
+    try:
+        dim=dimension(dimension_id)
+        if not isinstance(points,list) or not 1<=len(points)<=36:
+            raise BuildError("Supply 1..36 points [x,z]")
+        checked=[]
+        for p in points:
+            if not isinstance(p,list) or len(p)!=2 or any(type(n)!=int for n in p):
+                raise BuildError("Each sample must be [x,z] integers")
+            pos((p[0],64,p[1]))
+            checked.append(p)
+        results=[]
+        with _rcon() as session:
+            for x,z in checked:
+                tag="mcbh_"+secrets.token_hex(8)
+                summon=f'execute in {dim} positioned {x} 64 {z} positioned over {heightmap} run summon minecraft:marker ~ ~ ~ {{Tags:["{tag}"]}}'
+                try:
+                    spawned=session.command(summon)
+                    query=session.command(f"execute in {dim} run data get entity @e[type=minecraft:marker,tag={tag},limit=1] Pos[1]")
+                    match=re.search(r"(-?\d+(?:\.\d+)?)d\b",query)
+                    y=float(match.group(1)) if match else None
+                    results.append({"x":x,"z":z,"surface_y":y,"valid":y is not None,"response":_safe_response(query) if y is None else ""})
+                finally:
+                    session.command(f"execute in {dim} run kill @e[type=minecraft:marker,tag={tag}]")
+        valid=[r["surface_y"] for r in results if r["valid"]]
+        return {"dimension":dim,"heightmap":heightmap,"samples":results,"min_surface_y":min(valid) if valid else None,"max_surface_y":max(valid) if valid else None,"note":"Loaded-chunk heightmap only; does not identify materials, caves or existing buildings."}
+    except (BuildError,OSError,RconError,ValueError) as exc:
+        return {"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_check_block(x: int,y: int,z: int,candidates: list[str],dimension_id: str="minecraft:overworld") -> dict[str,Any]:
+    """Test up to 32 specific block IDs/states at a coordinate (no arbitrary vanilla read-block capability)."""
+    try:
+        dim=dimension(dimension_id)
+        xyz=pos((x,y,z))
+        if not isinstance(candidates,list) or not 1<=len(candidates)<=32:
+            raise BuildError("Supply 1..32 candidate block states")
+        checked=[block(s) for s in candidates]
+        with _rcon() as session:
+            for candidate in checked:
+                nonce="MCBHFOUND"+secrets.token_hex(6)
+                output=session.command(f"execute in {dim} if block {xyz[0]} {xyz[1]} {xyz[2]} {candidate} run say {nonce}")
+                if nonce in output and not _looks_like_error(output):
+                    return {"match":candidate,"known":True,"at":xyz}
+        return {"match":None,"known":False,"tested":checked,"note":"Unknown means none of supplied candidates matched; not that the block is air."}
+    except (BuildError,OSError,RconError) as exc:
+        return {"error":str(exc)}
+
+
+def main() -> None:
+    mcp.run(transport="stdio")
+
+
+if __name__=="__main__":
+    main()

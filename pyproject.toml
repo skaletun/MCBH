@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "minecraftbuildhumanized"
+version = "0.1.0"
+description = "MCBH: human-grade Minecraft building MCP server for Java 1.21+"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "MCBH contributors"}]
+dependencies = ["mcp>=2.0,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+mcbh = "mcbh.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcbh"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110

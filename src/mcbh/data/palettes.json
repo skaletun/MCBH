@@ -1,0 +1,57 @@
+{
+  "method": "Primary mass 60-75%, supporting structure 15-25%, relief 5-12%, focal accent <=5% are flexible visual guidelines. Arrange coherent weathering clusters and material logic, not uniform randomness.",
+  "palettes": {
+    "medieval_timber": {
+      "primary": ["minecraft:white_terracotta", "minecraft:calcite", "minecraft:birch_planks"],
+      "framework": ["minecraft:stripped_spruce_log[axis=y]", "minecraft:dark_oak_planks", "minecraft:spruce_fence"],
+      "stone_foundation": ["minecraft:stone_bricks", "minecraft:cracked_stone_bricks", "minecraft:mossy_stone_bricks", "minecraft:andesite"],
+      "roof": ["minecraft:dark_oak_stairs[facing=north,half=bottom]", "minecraft:dark_oak_slab[type=bottom]", "minecraft:spruce_stairs[facing=south,half=bottom]"],
+      "accent": ["minecraft:lantern", "minecraft:flower_pot", "minecraft:spruce_trapdoor"],
+      "placement_logic": "Strong timber grid, recessed pale infill, steep dark roof, 1-2 block eaves, stone damp zone below timber, asymmetrical chimney."
+    },
+    "alpine_rustic": {
+      "primary": ["minecraft:spruce_planks", "minecraft:stripped_spruce_wood", "minecraft:stone"],
+      "framework": ["minecraft:spruce_log[axis=y]", "minecraft:dark_oak_fence"],
+      "foundation": ["minecraft:cobblestone", "minecraft:stone_bricks", "minecraft:andesite", "minecraft:mossy_cobblestone"],
+      "roof": ["minecraft:spruce_stairs[facing=north,half=bottom]", "minecraft:spruce_slab[type=bottom]", "minecraft:dark_oak_stairs[facing=south,half=bottom]"],
+      "accent": ["minecraft:lantern", "minecraft:campfire[lit=false]", "minecraft:barrel"],
+      "placement_logic": "Long protective eaves, high pitched gables, snow/stone transition, substantial balconies anchored by posts."
+    },
+    "japanese_traditional": {
+      "primary": ["minecraft:calcite", "minecraft:white_concrete", "minecraft:birch_planks"],
+      "framework": ["minecraft:dark_oak_log[axis=y]", "minecraft:dark_oak_planks"],
+      "roof": ["minecraft:deepslate_tile_stairs[facing=north,half=bottom]", "minecraft:deepslate_tile_slab[type=bottom]", "minecraft:polished_blackstone_bricks"],
+      "accent": ["minecraft:cherry_leaves", "minecraft:cherry_trapdoor", "minecraft:lantern"],
+      "placement_logic": "Rhythmically spaced posts, deep projecting curved-look eaves, open threshold, restrained monochrome and intentional garden view."
+    },
+    "modern_concrete": {
+      "primary": ["minecraft:white_concrete", "minecraft:smooth_quartz", "minecraft:light_gray_concrete"],
+      "structure": ["minecraft:gray_concrete", "minecraft:polished_andesite", "minecraft:smooth_stone"],
+      "glazing": ["minecraft:glass", "minecraft:tinted_glass", "minecraft:light_gray_stained_glass_pane"],
+      "accent": ["minecraft:dark_oak_planks", "minecraft:sea_lantern", "minecraft:polished_deepslate"],
+      "placement_logic": "Use true cantilevers/recessed glass and strong proportional planes; preserve large quiet surfaces instead of ornament spam."
+    },
+    "desert_adobe": {
+      "primary": ["minecraft:smooth_sandstone", "minecraft:cut_sandstone", "minecraft:sandstone"],
+      "structure": ["minecraft:stripped_acacia_log[axis=y]", "minecraft:terracotta", "minecraft:orange_terracotta"],
+      "roof": ["minecraft:acacia_slab[type=bottom]", "minecraft:smooth_sandstone_slab[type=bottom]"],
+      "accent": ["minecraft:flowering_azalea_leaves", "minecraft:lantern", "minecraft:decorated_pot"],
+      "placement_logic": "Thick walls, deeply shaded niches and terraces, smaller shaded windows, low-flat roof supported by beams."
+    },
+    "dark_fantasy": {
+      "primary": ["minecraft:deepslate_bricks", "minecraft:deepslate_tiles", "minecraft:polished_deepslate"],
+      "structure": ["minecraft:dark_oak_log[axis=y]", "minecraft:polished_blackstone_bricks", "minecraft:tuff_bricks"],
+      "weathering": ["minecraft:cracked_deepslate_bricks", "minecraft:cobbled_deepslate", "minecraft:mossy_stone_bricks"],
+      "accent": ["minecraft:amethyst_block", "minecraft:purple_stained_glass", "minecraft:soul_lantern"],
+      "placement_logic": "Readable dark silhouette needs midtone breaks; concentrate saturated accents in focal openings, not every wall block."
+    },
+    "nature_terrain": {
+      "ground": ["minecraft:grass_block", "minecraft:dirt", "minecraft:coarse_dirt", "minecraft:rooted_dirt", "minecraft:podzol"],
+      "rock": ["minecraft:stone", "minecraft:andesite", "minecraft:tuff", "minecraft:mossy_cobblestone"],
+      "paths": ["minecraft:dirt_path", "minecraft:gravel", "minecraft:coarse_dirt", "minecraft:mud_bricks"],
+      "foliage": ["minecraft:moss_block", "minecraft:oak_leaves[persistent=true]", "minecraft:azalea_leaves[persistent=true]", "minecraft:short_grass"],
+      "placement_logic": "Shape landforms by contour and erosion, not noise voxels. Cluster rocks/plantings according to shade, runoff, traffic and elevation."
+    }
+  },
+  "palette_review": ["Can identify a coherent primary material from 30 blocks away?", "Are darker/older materials placed where weather and moisture make sense?", "Are trim and accents readable and rare?", "Do block family, biome and story agree?", "Does palette respect stair/slab directional properties?"]
+}

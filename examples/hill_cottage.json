@@ -1,0 +1,2057 @@
+{
+  "title": "Handbuilt-style timber hill cottage with functioning interior",
+  "dimension": "minecraft:overworld",
+  "intent": {
+    "style": "timber-frame rustic/medieval",
+    "footprint": "13x15 body, with porch, path and drainage",
+    "entrance": "south/front toward negative Z",
+    "notes": "Illustrative coordinate-level sample for an already cleared or prepared build site; requires visual review and physical collision inspection."
+  },
+  "phases": [
+    {
+      "name": "site",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            196,
+            69,
+            315
+          ],
+          "to": [
+            216,
+            69,
+            320
+          ],
+          "block": "minecraft:coarse_dirt"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            69,
+            315
+          ],
+          "to": [
+            207,
+            69,
+            322
+          ],
+          "block": "minecraft:gravel"
+        },
+        {
+          "type": "box",
+          "from": [
+            197,
+            69,
+            303
+          ],
+          "to": [
+            198,
+            71,
+            312
+          ],
+          "block": "minecraft:stone"
+        },
+        {
+          "type": "box",
+          "from": [
+            214,
+            69,
+            303
+          ],
+          "to": [
+            215,
+            70,
+            311
+          ],
+          "block": "minecraft:andesite"
+        }
+      ]
+    },
+    {
+      "name": "foundation",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            200,
+            69,
+            300
+          ],
+          "to": [
+            212,
+            70,
+            314
+          ],
+          "block": "minecraft:stone_bricks"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            71,
+            302
+          ],
+          "to": [
+            210,
+            71,
+            312
+          ],
+          "block": "minecraft:spruce_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            69,
+            299
+          ],
+          "to": [
+            213,
+            69,
+            315
+          ],
+          "block": "minecraft:cobblestone",
+          "mode": "outline"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            70,
+            315
+          ],
+          "to": [
+            207,
+            70,
+            316
+          ],
+          "block": "minecraft:stone_brick_stairs[facing=south,half=bottom]"
+        }
+      ]
+    },
+    {
+      "name": "structure",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            300
+          ],
+          "to": [
+            212,
+            80,
+            314
+          ],
+          "block": "minecraft:spruce_planks",
+          "mode": "hollow"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            300
+          ],
+          "to": [
+            200,
+            81,
+            300
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            314
+          ],
+          "to": [
+            200,
+            81,
+            314
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            206,
+            71,
+            300
+          ],
+          "to": [
+            206,
+            81,
+            300
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            206,
+            71,
+            314
+          ],
+          "to": [
+            206,
+            81,
+            314
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            71,
+            300
+          ],
+          "to": [
+            212,
+            81,
+            300
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            71,
+            314
+          ],
+          "to": [
+            212,
+            81,
+            314
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            300
+          ],
+          "to": [
+            200,
+            81,
+            300
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            71,
+            300
+          ],
+          "to": [
+            212,
+            81,
+            300
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            307
+          ],
+          "to": [
+            200,
+            81,
+            307
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            71,
+            307
+          ],
+          "to": [
+            212,
+            81,
+            307
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            71,
+            314
+          ],
+          "to": [
+            200,
+            81,
+            314
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            71,
+            314
+          ],
+          "to": [
+            212,
+            81,
+            314
+          ],
+          "block": "minecraft:stripped_spruce_log[axis=y]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            75,
+            300
+          ],
+          "to": [
+            212,
+            75,
+            300
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            75,
+            314
+          ],
+          "to": [
+            212,
+            75,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            75,
+            300
+          ],
+          "to": [
+            200,
+            75,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            75,
+            300
+          ],
+          "to": [
+            212,
+            75,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            80,
+            300
+          ],
+          "to": [
+            212,
+            80,
+            300
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            80,
+            314
+          ],
+          "to": [
+            212,
+            80,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            80,
+            300
+          ],
+          "to": [
+            200,
+            80,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            80,
+            300
+          ],
+          "to": [
+            212,
+            80,
+            314
+          ],
+          "block": "minecraft:dark_oak_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            71,
+            301
+          ],
+          "to": [
+            211,
+            71,
+            313
+          ],
+          "block": "minecraft:spruce_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            74,
+            300
+          ],
+          "to": [
+            208,
+            78,
+            300
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            71,
+            314
+          ],
+          "to": [
+            208,
+            73,
+            314
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            73,
+            300
+          ],
+          "to": [
+            203,
+            75,
+            300
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            73,
+            300
+          ],
+          "to": [
+            211,
+            75,
+            300
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            73,
+            314
+          ],
+          "to": [
+            203,
+            75,
+            314
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            73,
+            314
+          ],
+          "to": [
+            211,
+            75,
+            314
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            73,
+            304
+          ],
+          "to": [
+            200,
+            75,
+            306
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            73,
+            304
+          ],
+          "to": [
+            212,
+            75,
+            306
+          ],
+          "block": "minecraft:air"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            79,
+            301
+          ],
+          "to": [
+            211,
+            79,
+            313
+          ],
+          "block": "minecraft:spruce_slab[type=top]"
+        }
+      ]
+    },
+    {
+      "name": "roof",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            199,
+            81,
+            299
+          ],
+          "to": [
+            199,
+            81,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            213,
+            81,
+            299
+          ],
+          "to": [
+            213,
+            81,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            82,
+            299
+          ],
+          "to": [
+            200,
+            82,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            82,
+            299
+          ],
+          "to": [
+            212,
+            82,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            83,
+            299
+          ],
+          "to": [
+            201,
+            83,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            211,
+            83,
+            299
+          ],
+          "to": [
+            211,
+            83,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            84,
+            299
+          ],
+          "to": [
+            202,
+            84,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            84,
+            299
+          ],
+          "to": [
+            210,
+            84,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            85,
+            299
+          ],
+          "to": [
+            203,
+            85,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            85,
+            299
+          ],
+          "to": [
+            209,
+            85,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            86,
+            299
+          ],
+          "to": [
+            204,
+            86,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            208,
+            86,
+            299
+          ],
+          "to": [
+            208,
+            86,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            87,
+            299
+          ],
+          "to": [
+            205,
+            87,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=west,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            207,
+            87,
+            299
+          ],
+          "to": [
+            207,
+            87,
+            315
+          ],
+          "block": "minecraft:dark_oak_stairs[facing=east,half=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            206,
+            88,
+            299
+          ],
+          "to": [
+            206,
+            88,
+            315
+          ],
+          "block": "minecraft:dark_oak_slab[type=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            81,
+            300
+          ],
+          "to": [
+            211,
+            81,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            81,
+            314
+          ],
+          "to": [
+            211,
+            81,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            82,
+            300
+          ],
+          "to": [
+            210,
+            82,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            82,
+            314
+          ],
+          "to": [
+            210,
+            82,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            83,
+            300
+          ],
+          "to": [
+            209,
+            83,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            83,
+            314
+          ],
+          "to": [
+            209,
+            83,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            84,
+            300
+          ],
+          "to": [
+            208,
+            84,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            84,
+            314
+          ],
+          "to": [
+            208,
+            84,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            85,
+            300
+          ],
+          "to": [
+            207,
+            85,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            85,
+            314
+          ],
+          "to": [
+            207,
+            85,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            206,
+            86,
+            300
+          ],
+          "to": [
+            206,
+            86,
+            300
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            206,
+            86,
+            314
+          ],
+          "to": [
+            206,
+            86,
+            314
+          ],
+          "block": "minecraft:white_terracotta"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            81,
+            298
+          ],
+          "to": [
+            205,
+            87,
+            298
+          ],
+          "block": "minecraft:spruce_fence",
+          "mode": "outline"
+        },
+        {
+          "type": "box",
+          "from": [
+            207,
+            87,
+            298
+          ],
+          "to": [
+            213,
+            81,
+            298
+          ],
+          "block": "minecraft:spruce_fence",
+          "mode": "outline"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            81,
+            316
+          ],
+          "to": [
+            205,
+            87,
+            316
+          ],
+          "block": "minecraft:spruce_fence",
+          "mode": "outline"
+        },
+        {
+          "type": "box",
+          "from": [
+            207,
+            87,
+            316
+          ],
+          "to": [
+            213,
+            81,
+            316
+          ],
+          "block": "minecraft:spruce_fence",
+          "mode": "outline"
+        }
+      ]
+    },
+    {
+      "name": "facade",
+      "operations": [
+        {
+          "type": "set",
+          "at": [
+            205,
+            71,
+            300
+          ],
+          "block": "minecraft:spruce_door[facing=south,half=lower,hinge=left,open=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            205,
+            72,
+            300
+          ],
+          "block": "minecraft:spruce_door[facing=south,half=upper,hinge=left,open=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            206,
+            71,
+            300
+          ],
+          "block": "minecraft:spruce_door[facing=south,half=lower,hinge=right,open=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            206,
+            72,
+            300
+          ],
+          "block": "minecraft:spruce_door[facing=south,half=upper,hinge=right,open=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            73,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            74,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            203,
+            73,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            203,
+            74,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            72,
+            299
+          ],
+          "to": [
+            203,
+            72,
+            299
+          ],
+          "block": "minecraft:spruce_slab[type=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            73,
+            300
+          ],
+          "to": [
+            201,
+            75,
+            300
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            73,
+            300
+          ],
+          "to": [
+            204,
+            75,
+            300
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            73,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            74,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            73,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            74,
+            300
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            72,
+            299
+          ],
+          "to": [
+            211,
+            72,
+            299
+          ],
+          "block": "minecraft:spruce_slab[type=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            73,
+            300
+          ],
+          "to": [
+            209,
+            75,
+            300
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            73,
+            300
+          ],
+          "to": [
+            212,
+            75,
+            300
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            73,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            74,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            203,
+            73,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            203,
+            74,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            72,
+            315
+          ],
+          "to": [
+            203,
+            72,
+            315
+          ],
+          "block": "minecraft:spruce_slab[type=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            73,
+            314
+          ],
+          "to": [
+            201,
+            75,
+            314
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            73,
+            314
+          ],
+          "to": [
+            204,
+            75,
+            314
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            73,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            74,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            73,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            74,
+            314
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            72,
+            315
+          ],
+          "to": [
+            211,
+            72,
+            315
+          ],
+          "block": "minecraft:spruce_slab[type=bottom]"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            73,
+            314
+          ],
+          "to": [
+            209,
+            75,
+            314
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            73,
+            314
+          ],
+          "to": [
+            212,
+            75,
+            314
+          ],
+          "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            73,
+            304
+          ],
+          "to": [
+            200,
+            74,
+            304
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            72,
+            304
+          ],
+          "to": [
+            199,
+            72,
+            304
+          ],
+          "block": "minecraft:spruce_stairs[facing=north,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            200,
+            73,
+            306
+          ],
+          "to": [
+            200,
+            74,
+            306
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            72,
+            306
+          ],
+          "to": [
+            199,
+            72,
+            306
+          ],
+          "block": "minecraft:spruce_stairs[facing=north,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            73,
+            304
+          ],
+          "to": [
+            212,
+            74,
+            304
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            213,
+            72,
+            304
+          ],
+          "to": [
+            213,
+            72,
+            304
+          ],
+          "block": "minecraft:spruce_stairs[facing=north,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            212,
+            73,
+            306
+          ],
+          "to": [
+            212,
+            74,
+            306
+          ],
+          "block": "minecraft:glass_pane"
+        },
+        {
+          "type": "box",
+          "from": [
+            213,
+            72,
+            306
+          ],
+          "to": [
+            213,
+            72,
+            306
+          ],
+          "block": "minecraft:spruce_stairs[facing=north,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            204,
+            74,
+            299
+          ],
+          "to": [
+            208,
+            74,
+            299
+          ],
+          "block": "minecraft:spruce_stairs[facing=south,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            70,
+            298
+          ],
+          "to": [
+            203,
+            74,
+            298
+          ],
+          "block": "minecraft:spruce_fence"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            70,
+            298
+          ],
+          "to": [
+            209,
+            74,
+            298
+          ],
+          "block": "minecraft:spruce_fence"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            75,
+            298
+          ],
+          "to": [
+            209,
+            75,
+            298
+          ],
+          "block": "minecraft:spruce_slab[type=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            203,
+            75,
+            298
+          ],
+          "to": [
+            209,
+            75,
+            300
+          ],
+          "block": "minecraft:spruce_slab[type=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            76,
+            308
+          ],
+          "to": [
+            209,
+            89,
+            309
+          ],
+          "block": "minecraft:bricks"
+        },
+        {
+          "type": "box",
+          "from": [
+            208,
+            89,
+            307
+          ],
+          "to": [
+            210,
+            89,
+            307
+          ],
+          "block": "minecraft:brick_stairs[facing=north,half=top]"
+        },
+        {
+          "type": "box",
+          "from": [
+            208,
+            89,
+            310
+          ],
+          "to": [
+            210,
+            89,
+            310
+          ],
+          "block": "minecraft:brick_stairs[facing=north,half=top]"
+        }
+      ]
+    },
+    {
+      "name": "interior",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            202,
+            72,
+            302
+          ],
+          "to": [
+            204,
+            72,
+            303
+          ],
+          "block": "minecraft:barrel"
+        },
+        {
+          "type": "box",
+          "from": [
+            201,
+            72,
+            302
+          ],
+          "to": [
+            201,
+            73,
+            304
+          ],
+          "block": "minecraft:bookshelf"
+        },
+        {
+          "type": "box",
+          "from": [
+            210,
+            72,
+            311
+          ],
+          "to": [
+            211,
+            72,
+            312
+          ],
+          "block": "minecraft:furnace[facing=west,lit=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            73,
+            312
+          ],
+          "block": "minecraft:lantern[hanging=false]"
+        },
+        {
+          "type": "box",
+          "from": [
+            205,
+            72,
+            307
+          ],
+          "to": [
+            207,
+            72,
+            309
+          ],
+          "block": "minecraft:spruce_stairs[facing=north,half=bottom]"
+        },
+        {
+          "type": "set",
+          "at": [
+            206,
+            73,
+            308
+          ],
+          "block": "minecraft:flower_pot"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            72,
+            311
+          ],
+          "block": "minecraft:red_bed[facing=south,part=foot,occupied=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            72,
+            312
+          ],
+          "block": "minecraft:red_bed[facing=south,part=head,occupied=false]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            72,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            73,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            74,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            75,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            76,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            77,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            78,
+            303
+          ],
+          "block": "minecraft:ladder[facing=west]"
+        },
+        {
+          "type": "box",
+          "from": [
+            202,
+            79,
+            302
+          ],
+          "to": [
+            206,
+            79,
+            306
+          ],
+          "block": "minecraft:spruce_planks"
+        },
+        {
+          "type": "box",
+          "from": [
+            209,
+            72,
+            302
+          ],
+          "to": [
+            211,
+            72,
+            303
+          ],
+          "block": "minecraft:barrel"
+        }
+      ]
+    },
+    {
+      "name": "landscape",
+      "operations": [
+        {
+          "type": "box",
+          "from": [
+            203,
+            69,
+            317
+          ],
+          "to": [
+            204,
+            69,
+            318
+          ],
+          "block": "minecraft:dirt_path"
+        },
+        {
+          "type": "box",
+          "from": [
+            208,
+            69,
+            317
+          ],
+          "to": [
+            209,
+            69,
+            318
+          ],
+          "block": "minecraft:coarse_dirt"
+        },
+        {
+          "type": "box",
+          "from": [
+            197,
+            70,
+            300
+          ],
+          "to": [
+            199,
+            70,
+            302
+          ],
+          "block": "minecraft:moss_block"
+        },
+        {
+          "type": "box",
+          "from": [
+            213,
+            70,
+            309
+          ],
+          "to": [
+            216,
+            70,
+            310
+          ],
+          "block": "minecraft:moss_block"
+        },
+        {
+          "type": "set",
+          "at": [
+            197,
+            71,
+            301
+          ],
+          "block": "minecraft:azalea"
+        },
+        {
+          "type": "set",
+          "at": [
+            198,
+            71,
+            309
+          ],
+          "block": "minecraft:azalea"
+        },
+        {
+          "type": "set",
+          "at": [
+            215,
+            71,
+            310
+          ],
+          "block": "minecraft:azalea"
+        },
+        {
+          "type": "set",
+          "at": [
+            217,
+            70,
+            303
+          ],
+          "block": "minecraft:azalea"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            300
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            302
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            304
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            306
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            308
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            310
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            196,
+            70,
+            312
+          ],
+          "block": "minecraft:oak_leaves[persistent=true]"
+        },
+        {
+          "type": "box",
+          "from": [
+            199,
+            70,
+            316
+          ],
+          "to": [
+            203,
+            70,
+            316
+          ],
+          "block": "minecraft:spruce_fence"
+        },
+        {
+          "type": "box",
+          "from": [
+            211,
+            70,
+            316
+          ],
+          "to": [
+            215,
+            70,
+            316
+          ],
+          "block": "minecraft:spruce_fence"
+        }
+      ]
+    },
+    {
+      "name": "lighting",
+      "operations": [
+        {
+          "type": "set",
+          "at": [
+            204,
+            74,
+            299
+          ],
+          "block": "minecraft:lantern[hanging=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            208,
+            74,
+            299
+          ],
+          "block": "minecraft:lantern[hanging=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            202,
+            74,
+            302
+          ],
+          "block": "minecraft:lantern[hanging=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            210,
+            74,
+            312
+          ],
+          "block": "minecraft:lantern[hanging=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            206,
+            75,
+            306
+          ],
+          "block": "minecraft:lantern[hanging=true]"
+        },
+        {
+          "type": "set",
+          "at": [
+            201,
+            70,
+            300
+          ],
+          "block": "minecraft:torch"
+        },
+        {
+          "type": "set",
+          "at": [
+            211,
+            70,
+            300
+          ],
+          "block": "minecraft:torch"
+        },
+        {
+          "type": "set",
+          "at": [
+            199,
+            71,
+            315
+          ],
+          "block": "minecraft:torch"
+        },
+        {
+          "type": "set",
+          "at": [
+            213,
+            71,
+            315
+          ],
+          "block": "minecraft:torch"
+        }
+      ]
+    }
+  ]
+}
