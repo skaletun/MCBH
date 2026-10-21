@@ -5,7 +5,7 @@ import json
 def test_included_resource_library():
     root = files('mcbh') / 'data'
     assert '## 15. Visual apprenticeship is mandatory' in (root/'SKILL.md').read_text(encoding='utf-8')
-    assert 'visual' in (root/'REFERENCE_ATLAS.md').read_text(encoding='utf-8')
+    assert 'VISUAL_ATLAS.md' in (root/'REFERENCE_ATLAS.md').read_text(encoding='utf-8')
     assert 'medieval_timber' in json.loads((root/'palettes.json').read_text(encoding='utf-8'))['palettes']
     assert len(json.loads((root/'references.json').read_text(encoding='utf-8'))) >= 12
     visual=json.loads((root/'visual_index.json').read_text(encoding='utf-8'))
