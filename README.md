@@ -63,6 +63,18 @@ The MCP server handles **both** original professional creation from a natural-la
 **REА status:** REA's documented CDP/browser analysis methods were studied, but the REA runtime itself was **not executed in this environment** (a compatible installed runtime and network package access were unavailable). The site behavior was inspected independently in a public browser; the implementation is an evidence-based functional interpretation rather than a claim to have recovered Brictora's proprietary source logic. See [Research & limitations](knowledge/GUIDED_BUILDER.md).
 
 
+
+## Original professional-builder engine (new architecture tools)
+
+MCBH now designs **new Minecraft buildings from a structured design brief**; it is no longer limited to imported \`.schem\` and \`.litematic\` files. The MCP host AI agent is responsible for interpreting the human request, reading actual references, surveying terrain and evaluating screenshot feedback. The included geometric compiler translates architectural decisions into editable, phased Minecraft blocks.
+
+- \`mcbh_architect_capabilities\`: supported purposes, styles and parameters.
+- \`mcbh_design_build\`: create an original, varied design with functional rooms, connected structures, real pitched roof or flat parapet, inset windows, exposed framework, site integration, materials, and staged construction job.
+- \`mcbh_architecture_review\`: measured shape/material quality gates; no invented aesthetic scores.
+- \`mcbh_refine_design\`: create a revised version without replacing its predecessor.
+
+**[Architecture skill & acceptance criteria](knowledge/ARCHITECTURE.md)** — read the complete workflow. Generated structures can be examined in the existing offline viewer, inspected layer-by-layer and exported to \`.mcfunction\`. No world changes occur until the user reviews and approves the separate staged RCON build. No version of an AI text model is embedded in the server: the MCP-connected agent is the designer, and the local compiler implements mechanical geometry. Human-grade aesthetics require screenshot critique and iteration.
+
 ## Installation (Windows / PowerShell)
 
 Install Python **3.11+** and [uv](https://docs.astral.sh/uv/):

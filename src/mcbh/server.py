@@ -14,6 +14,7 @@ from .core import Store, BuildError, block, dimension, pos, compile_blueprint, r
 from .rcon import Rcon, RconError
 from . import structures as st
 from .viewer import export_viewer
+from .architect import generate as design_generate, revision as design_revision, STYLES, FUNCTIONS
 
 mcp = MCPServer("MCBH - MinecraftBuildHumanized")
 
@@ -101,13 +102,13 @@ def resource_references() -> str:
 def professional_builder_task(user_request: str) -> str:
     """Full professional builder workflow for a user architecture request."""
     return ("You are a professional Minecraft builder, not a pre-made house generator. "
-            "First call mcbh_read_skill('all'), and when importing a file also read mcbh://guided-builder; then mcbh_palettes and mcbh_references. "
+            "First call mcbh_read_skill('all'), mcbh_visual_guides('all'), and read mcbh://architect. For a new original building, translate the user's intent into a structured brief and call mcbh_design_build; for an existing file read mcbh://guided-builder and use import tools. "
             "Survey terrain when connected; ask for dimensions/placement only if truly necessary. "
             "Develop a unique silhouette, material hierarchy, terrain adaptation, varied roofline, "
             "3D facade depths, buildable floor plans, human-scale furnishing and landscape. "
             "Stage actual block-coordinate geometry as a phased blueprint, inspect preview warnings, "
             "and obtain explicit approval before execution. Inspect after each phase. "
-            "Do not claim visual inspection without a real screenshot or user feedback. "
+            "After designing, export the offline 3D-like viewer and ask for real screenshot feedback. Refine using mcbh_refine_design after critiquing silhouette, all four facades, roofing, interior access, palette hierarchy and terrain. Never claim visual inspection without actual screenshot evidence. "
             f"User request: {user_request}")
 
 
@@ -398,6 +399,102 @@ def mcbh_export_mcfunction(structure_id: str, at: list[int], dimension_id: str="
     except (BuildError,OSError,ValueError) as exc:
         return {"error":str(exc)}
 
+
+
+
+def _publish_architecture(result: dict[str, Any]) -> dict[str, Any]:
+    """Persist geometry for reuse with guide tools; stage construction for human approval."""
+    import hashlib
+    import gzip
+    content=result["structure"]
+    canonical=json.dumps(content,sort_keys=True,ensure_ascii=False,separators=(",",":"))
+    sid=hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
+    content["id"]=sid
+    root=st._root_dir("MCBH_DATA_DIR","jobs")/"structures"
+    root.mkdir(parents=True,exist_ok=True)
+    destination=root/f"{sid}.json.gz"
+    if not destination.exists():
+        st._atomic_gzip(destination,json.dumps(content,ensure_ascii=False).encode("utf-8"))
+    design=result["design"]
+    outcome={"structure_id":sid,"style":design["style"],"building_type":design["building_type"],
+             "seed":design["seed"],"size":content["size"],
+             "absolute_origin":design["anchor"],"quality":result["quality"],
+             "materials":st.materials(content,True)[:20],
+             "human_review_required":True,
+             "warning":"Only geometry has been evaluated. Actual screenshots, collisions and environmental fit require in-game review."}
+    if not result["quality"]["passed"]:
+        outcome["stage_error"]="Mechanical quality gates failed; design was saved but not staged."
+        return outcome
+    job=_store().stage(result["blueprint"])
+    outcome.update({"staged":True,"job_id":job["id"],"approval_token":job["approval_token"],
+                    "audit":review(job),"next_steps":"Inspect structure via mcbh_export_viewer and mcbh_structure_layer, obtain human approval, then execute phases in order."})
+    return outcome
+
+
+@mcp.resource("mcbh://architect")
+def resource_architect() -> str:
+    """Original professional-builder decision protocol and design acceptance criteria."""
+    return _data("ARCHITECTURE.md")
+
+
+@mcp.tool()
+def mcbh_architect_capabilities() -> dict[str, Any]:
+    """Supported architectural styles, building types, input schema, limitations and reference-driven workflow."""
+    return {"styles":sorted(STYLES),"building_types":sorted(FUNCTIONS),
+            "brief_schema":{"title":"string, optional","style":"one of styles",
+                            "building_type":"one of building_types",
+                            "width":"int 13..39","depth":"int 13..39","floors":"int 1..3",
+                            "seed":"int 0..2147483647","anchor":"[world_x, floor_y, world_z]",
+                            "terrain":"[[local_x, local_z, world_surface_y], ...] max 36 samples",
+                            "wing":"true|false|auto"},
+            "read_first":["mcbh://architect","mcbh://skill","mcbh://visuals"],
+            "limitations":["No built-in neural image generator or free-form language model; the MCP host agent must interpret the user's prompt",
+                           "Generates architectural houses and related small buildings; not arbitrary castles, sculptures or cities",
+                           "No world screenshot/collision feedback over RCON; real inspection is a separate step",
+                           "Building is staged, not executed, until explicitly approved"]}
+
+
+@mcp.tool()
+def mcbh_design_build(brief: dict[str, Any]) -> dict[str, Any]:
+    """Create original, seed-variable architecture (terrain, silhouette, roof, real facade depth, interior, landscaping) from a structured AI design brief. Produce a reusable guide and staged RCON job; never executes without separate human approval."""
+    try:
+        return _publish_architecture(design_generate(brief))
+    except (BuildError,OSError,ValueError) as exc:
+        return {"staged":False,"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_refine_design(structure_id: str, changes: dict[str, Any]) -> dict[str, Any]:
+    """Rebuild an original design as a NEW preserved version after user/vision critique. Accepts changed dimensions, seed, style, program, terrain, floors and attached wing; never changes the original."""
+    try:
+        old=st.load_structure(structure_id)
+        if not isinstance(old.get("design_brief"),dict):
+            raise BuildError("This structure is not an original MCBH architecture; use mcbh_design_build")
+        return _publish_architecture(design_revision(old["design_brief"],changes))
+    except (BuildError,OSError,ValueError) as exc:
+        return {"staged":False,"error":str(exc)}
+
+
+@mcp.tool()
+def mcbh_architecture_review(structure_id: str) -> dict[str, Any]:
+    """Check a generated design's measured block geometry, deterministic design brief and mechanical quality gates; does NOT claim a visual screenshot review."""
+    try:
+        src=st.load_structure(structure_id)
+        if src.get("format")!="mcbh-original-architecture":
+            raise BuildError("Only MCBH-designed architecture can be reviewed with this tool")
+        counts={}
+        for *xyz,state in src["blocks"]:
+            stage = "unknown"
+            if "stairs" in state or "slab" in state: stage="shaped_block"
+            counts[stage]=counts.get(stage,0)+1
+        return {"structure_id":structure_id,"quality":src.get("design_quality"),
+                "block_count":len(src["blocks"]),"size":src["size"],
+                "shaped_blocks":counts.get("shaped_block",0),
+                "brief":src["design_brief"],
+                "visual_inspection":"NOT PERFORMED. Screenshot review is mandatory for a professional-quality claim.",
+                "required_views":["front","back","left","right","roof","each inhabited floor","terrain connections"]}
+    except (BuildError,OSError,ValueError) as exc:
+        return {"error":str(exc)}
 
 
 def main() -> None:
